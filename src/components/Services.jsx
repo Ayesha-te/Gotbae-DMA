@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { Code, Smartphone, Globe, Search, Cloud, BarChart, Star, ArrowRight, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const Services = () => {
   const [hoveredService, setHoveredService] = useState(null);
+  const navigate = useNavigate();
 
   const services = [
     {
@@ -121,11 +122,12 @@ const Services = () => {
                           View Portfolio
                         </button>
                       </Link>
-                      <Link to="/contact">
-                        <button className="bg-white text-gray-900 px-6 py-2 rounded-lg hover:bg-gray-100 font-semibold">
-                          Schedule Consultation
-                        </button>
-                      </Link>
+                      <button
+                        onClick={() => navigate('/', { state: { scrollToContact: true } })}
+                        className="bg-white text-gray-900 px-6 py-2 rounded-lg hover:bg-gray-100 font-semibold"
+                      >
+                        Schedule Consultation
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -142,16 +144,17 @@ const Services = () => {
               Our experts are ready to guide your journey. Whether it’s an idea or a full-fledged product.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/Projects">
-                <button className=" bg-white border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold hover:border-blue-500 hover:text-blue-600">
+              <Link to="/projects">
+                <button className="bg-white border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold hover:border-blue-500 hover:text-blue-600">
                   See Our Projects
                 </button>
               </Link>
-              <Link to="/Contact">
-                <button className="bg-white border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold hover:border-blue-500 hover:text-blue-600">
-                  Book Free Consultation
-                </button>
-              </Link>
+              <button
+                onClick={() => navigate('/', { state: { scrollToContact: true } })}
+                className="bg-white border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl font-semibold hover:border-blue-500 hover:text-blue-600"
+              >
+                Book Free Consultation
+              </button>
             </div>
           </div>
         </div>

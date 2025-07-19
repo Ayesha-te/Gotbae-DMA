@@ -13,20 +13,32 @@ const Navigation = () => {
     {
       name: 'Services',
       href: '/services',
-      dropdown: ['Web Development', 'Mobile Apps', 'Digital Marketing', 'SEO Services', 'Business Solutions','LLMs&Chatbots','Social Media Marketing']
+      dropdown: [
+        'Web Development',
+        'Mobile Apps',
+        'Digital Marketing',
+        'SEO Services',
+        'Business Solutions',
+        'LLMs&Chatbots',
+        'Social Media Marketing',
+      ],
     },
     {
       name: 'Who We Are',
       href: '/whoWeAre',
-      dropdown: ['Blog', 'Projects']
+      dropdown: ['Blog', 'Projects'],
     },
     { name: 'Contact', href: '#contact' },
   ];
 
   const handleNavClick = (item) => {
-    if (item.href.startsWith('#')) {
-      const el = document.querySelector(item.href);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (item.href === '#contact') {
+      if (window.location.pathname === '/') {
+        const el = document.getElementById('contact');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        navigate('/', { state: { scrollToContact: true } });
+      }
     } else {
       navigate(item.href);
     }
@@ -45,8 +57,7 @@ const Navigation = () => {
     <nav className="bg-white shadow-md sticky top-0 z-50 transition-all duration-300">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-
-          {/* Logo + Company Name */}
+          {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <img src={logo} alt="Logo" className="h-10 w-auto" />
             <span className="text-2xl font-bold text-gray-800 tracking-wide hover:text-blue-600 transition-all duration-300">
@@ -75,7 +86,6 @@ const Navigation = () => {
                   {item.dropdown && <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />}
                 </a>
 
-                {/* Dropdown Menu */}
                 {item.dropdown && activeDropdown === item.name && (
                   <div className="absolute top-full left-0 bg-white shadow-lg rounded-lg py-2 w-48 z-50">
                     {item.dropdown.map((subItem) => (
@@ -124,8 +134,6 @@ const Navigation = () => {
                 >
                   {item.name}
                 </a>
-
-                {/* Mobile Dropdown */}
                 {item.dropdown && (
                   <div className="ml-4 mt-1 space-y-1">
                     {item.dropdown.map((subItem) => (
@@ -141,8 +149,6 @@ const Navigation = () => {
                 )}
               </div>
             ))}
-
-            {/* Mobile Button */}
             <button className="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition-all duration-300 transform hover:scale-105">
               AI Assistant
             </button>
