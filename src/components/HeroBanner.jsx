@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import React from 'react';
-import banner from '../assets/banner.jpg'; // 👈 ensure the path is correct
+import banner from '../assets/Banner.jpg'; // 👈 ensure the path is correct
 
 const HeroBanner = () => {
   return (
