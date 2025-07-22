@@ -47,7 +47,7 @@ const Navigation = () => {
           <Link to="/" className="flex items-center space-x-3 absolute left-0 top-1/2 transform -translate-y-1/2">
             <img src={logo} alt="Logo" className="h-10 w-auto" />
             <span className="text-2xl font-bold text-gray-800 tracking-wide hover:text-blue-600 transition-all duration-300">
-              GotBae
+              GOTBAE
             </span>
           </Link>
 
