@@ -1,4 +1,5 @@
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
 const Footer = () => {
@@ -58,10 +59,10 @@ const Footer = () => {
         <div>
           <h4 className="text-lg font-semibold mb-4">Services</h4>
           <ul className="space-y-3">
-            <li><a href="/ServicesPage" className="text-gray-400 hover:text-white">Web Development</a></li>
-            <li><a href="/ServicesPage" className="text-gray-400 hover:text-white">App Development</a></li>
-            <li><a href="/ServicesPage" className="text-gray-400 hover:text-white">Social Media Marketing</a></li>
-            <li><a href="/ServicesPage" className="text-gray-400 hover:text-white">LLMs & AI Chatbots</a></li>
+            <li><Link to="/ServicesPage" className="text-gray-400 hover:text-white">Web Development</Link></li>
+            <li><Link to="/ServicesPage" className="text-gray-400 hover:text-white">App Development</Link></li>
+            <li><Link to="/ServicesPage" className="text-gray-400 hover:text-white">Social Media Marketing</Link></li>
+            <li><Link to="/ServicesPage" className="text-gray-400 hover:text-white">LLMs & AI Chatbots</Link></li>
           </ul>
         </div>
 
@@ -69,9 +70,9 @@ const Footer = () => {
         <div>
           <h4 className="text-lg font-semibold mb-4">Who We Are</h4>
           <ul className="space-y-3">
-            <li><a href="/WhoWeAre" className="text-gray-400 hover:text-white">About Us</a></li>
-            <li><a href="/whoWeAre" className="text-gray-400 hover:text-white">Our Mission</a></li>
-            <li><a href="/AboutUs" className="text-gray-400 hover:text-white">Our Story</a></li>
+            <li><Link to="/WhoWeAre" className="text-gray-400 hover:text-white">About Us</Link></li>
+            <li><Link to="/WhoWeAre" className="text-gray-400 hover:text-white">Our Mission</Link></li>
+            <li><Link to="/AboutUs" className="text-gray-400 hover:text-white">Our Story</Link></li>
           </ul>
         </div>
 
@@ -79,9 +80,9 @@ const Footer = () => {
         <div>
           <h4 className="text-lg font-semibold mb-4">Projects</h4>
           <ul className="space-y-3">
-            <li><a href="/Projects" className="text-gray-400 hover:text-white">Our Projects</a></li>
-            <li><a href="/ServicesPage" className="text-gray-400 hover:text-white">Our Services</a></li>
-            <li><a href="/Aboutus" className="text-gray-400 hover:text-white">About Us</a></li>
+            <li><Link to="/Projects" className="text-gray-400 hover:text-white">Our Projects</Link></li>
+            <li><Link to="/ServicesPage" className="text-gray-400 hover:text-white">Our Services</Link></li>
+            <li><Link to="/Aboutus" className="text-gray-400 hover:text-white">About Us</Link></li>
           </ul>
         </div>
       </div>
