@@ -1,5 +1,5 @@
-import { MessageCircle } from "lucide-react";
-
+import React from 'react';
+import whatsappLogo from '../assets/whatsapp.png'; 
 const FloatingWhatsApp = () => {
   return (
     <div className="fixed bottom-6 right-6 z-50">
@@ -7,10 +7,14 @@ const FloatingWhatsApp = () => {
         href="https://wa.me/447470089199"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center space-x-3 bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-full shadow-xl transition-all duration-300 transform hover:scale-110"
+        className="w-16 h-16 rounded-full bg-green-500 shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-110 flex items-center justify-center"
+        aria-label="Chat on WhatsApp"
       >
-        <MessageCircle className="w-7 h-7" />
-        <span className="text-lg font-semibold"> </span>
+        <img
+          src={whatsappLogo}
+          alt="WhatsApp"
+          className="w-9 h-9 object-contain"
+        />
       </a>
     </div>
   );
