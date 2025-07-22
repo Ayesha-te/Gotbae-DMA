@@ -5,7 +5,7 @@ import img1 from '../assets/story.jpg';
 import img2 from '../assets/mission.jpg';
 import img3 from '../assets/values.jpg';
 
-const AgencyAbout = ({ onBack }) => {
+const Aboutus = ({ onBack }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [curtainOpen, setCurtainOpen] = useState(false);
 
@@ -16,21 +16,21 @@ const AgencyAbout = ({ onBack }) => {
 
   const sections = [
     {
-      title: 'Our Story',
+      title: 'Our Vision',
       description:
-        "Founded with a passion for innovation, our agency has grown from a small team of tech enthusiasts into a full-scale digital solutions powerhouse. Our story is rooted in the desire to create meaningful impact through technology and design.",
+        "At GOTBAE, our vision is to empower businesses with innovative digital solutions that drive growth, foster creativity, and create lasting impact. We aspire to be a leading force in the digital landscape, helping organizations of all sizes achieve their goals through cutting-edge technology, exceptional design, and strategic expertise.",
       image: img1
     },
     {
       title: 'Our Mission',
       description:
-        "To help businesses thrive in a digital-first world by delivering cutting-edge solutions with transparency, creativity, and strategy. We focus on making tech approachable and effective.",
+        "At GOTBAE, our mission is to empower businesses of all sizes by delivering tailored digital solutions that drive measurable results. We are committed to helping our clients establish a strong online presence, optimize their operations, and achieve sustainable growth in an ever-changing digital landscape.",
       image: img2
     },
     {
       title: 'Our Values',
       description:
-        "We value trust, innovation, and collaboration. Our work culture empowers individuals and celebrates teamwork, ensuring that every solution is driven by purpose and impact.",
+        "At GOTBAE, we value trust, innovation, and collaboration. Our work culture empowers individuals and celebrates teamwork, ensuring that every solution is driven by purpose and impact.",
       image: img3
     }
   ];
@@ -85,4 +85,4 @@ const AgencyAbout = ({ onBack }) => {
   );
 };
 
-export default AgencyAbout;
+export default Aboutus;

@@ -44,7 +44,7 @@ const HeroBanner = () => {
               href="#contact"
               className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl flex items-center space-x-2 group"
             >
-              <span className="transition-all duration-300">Get Started</span>
+              <span className="transition-all duration-300">Get Quote</span>
               <ArrowRight className="w-5 h-5 transition-all duration-300 group-hover:translate-x-1" />
             </a>
           </div>

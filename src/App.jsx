@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import FloatingContact from './components/FloatingContact';
+import FloatingWhatsApp from './components/FloatingWhatsApp'; 
 
 import Home from './pages/Home';
 import WhoWeAre from './pages/WhoWeAre';
-import Blog from './pages/Blog';
+import Aboutus from './pages/Aboutus';
 import Projects from './pages/Projects';
 import ServicesPage from './pages/ServicesPage';
+import AboutUs from './components/AboutUs';
 
 function App() {
   return (
@@ -20,7 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/whoWeAre" element={<WhoWeAre />} />
-            <Route path="/blog" element={<Blog />} />
+            <Route path="/Aboutus" element={<Aboutus />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/services" element={<ServicesPage />} />
           </Routes>
@@ -28,6 +30,7 @@ function App() {
 
         <Footer />
         <FloatingContact />
+        <FloatingWhatsApp /> 
       </div>
     </Router>
   );

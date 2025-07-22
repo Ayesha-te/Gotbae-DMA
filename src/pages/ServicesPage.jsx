@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
   ArrowLeft, Code, Share2, Globe, Bot, MessageSquare, BarChart,
-  Check, Star
+  Check, Star, Smartphone
 } from 'lucide-react';
 
 import bannerImg from '../assets/services.jpg';
@@ -126,6 +126,27 @@ const ServicesPage = ({ onBack }) => {
       whyBetter: [
         "Enterprise-grade tools",
         "Workflow automation"
+      ]
+    },
+    {
+      icon: <Smartphone className="w-12 h-12" />,
+      title: "App Development",
+      shortDesc: "iOS & Android native + cross-platform",
+      fullDesc: "We develop intuitive and robust mobile apps using Flutter, React Native, and native SDKs for a seamless user experience across all devices.",
+      features: [
+        "iOS & Android Support",
+        "Cross-platform Development",
+        "Push Notifications",
+        "App Store Deployment",
+        "Secure APIs"
+      ],
+      technologies: ["Flutter", "React Native", "Swift", "Kotlin"],
+      gradient: "from-yellow-500 to-orange-500",
+      whyBetter: [
+        "Fast & lightweight apps",
+        "Cross-platform efficiency",
+        "User-centric UI/UX",
+        "Backend integration"
       ]
     }
   ];

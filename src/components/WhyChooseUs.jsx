@@ -48,7 +48,7 @@ const WhyChooseUs = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Why Choose GotBae?
+            Why Choose GOTBAE?
           </h2>
           <p className="text-xl text-purple-100 max-w-3xl mx-auto">
             We're not just another digital agency. Here's what makes us different and why clients choose us again and again

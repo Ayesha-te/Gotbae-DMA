@@ -9,7 +9,7 @@ const AboutUs = () => {
       {/* Header */}
       <div className="text-center mb-16">
         <h2 className="text-5xl font-bold mb-4">
-          About <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">GotBae</span>
+          About <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">GOTBAE</span>
         </h2>
         <p className="text-xl max-w-3xl mx-auto text-gray-200">
           We're a passionate team of digital experts driving transformation through creative technology.

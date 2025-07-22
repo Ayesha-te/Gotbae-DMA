@@ -49,7 +49,7 @@ const AgencyStats = () => {
             Building <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">Digital Excellence</span>
           </h2>
           <p className="text-lg text-gray-700 leading-relaxed">
-            At GotBae, we blend creativity with technology to drive measurable results. Our team of visionaries, engineers, and designers help brands grow, innovate, and connect with impact.
+            At GOTBAE, we blend creativity with technology to drive measurable results. Our team of visionaries, engineers, and designers help brands grow, innovate, and connect with impact.
           </p>
         </div>
 
