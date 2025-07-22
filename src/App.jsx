@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import FloatingContact from './components/FloatingContact';
-import FloatingWhatsApp from './components/FloatingWhatsApp'; 
+import FloatingWhatsApp from './components/FloatingWhatsapp'; 
 
 import Home from './pages/Home';
 import WhoWeAre from './pages/WhoWeAre';
