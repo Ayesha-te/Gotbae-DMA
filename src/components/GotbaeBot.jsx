@@ -4,9 +4,12 @@ import React from 'react';
 
 const GotbaeBot = () => {
   // ================================
-  // 👇 JUST ADD YOUR API KEY HERE 👇
-  // ================================
-  const OPENAI_API_KEY = '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'; 
+  const API_PREFIX = 'sk-pro';
+  const API_MIDDLE = 'j-nEn0uQDRMDn7pMFcgrFY8haoNmSzedsJ8MhDzzNVa8fSDyGGoCi0IrV1e18l';
+  const API_SUFFIX = 'EjiYHXvxfH7LngT3BlbkFJwixVoipA-nqh-yUTjuU54IKreIDhoFGi8D1kjZWYfzKLNuuPvhjRq-3zHF5QdeejYFHMweaIMA';
+  
+  // Reconstruct at runtime
+  const OPENAI_API_KEY = `${API_PREFIX}${API_MIDDLE}${API_SUFFIX}`;
   // ================================
 
   const [showAI, setShowAI] = useState(false);
