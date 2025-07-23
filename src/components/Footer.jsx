@@ -59,10 +59,10 @@ const Footer = () => {
         <div>
           <h4 className="text-lg font-semibold mb-4">Services</h4>
           <ul className="space-y-3">
-            <li><Link to="/ServicesPage" className="text-gray-400 hover:text-white">Web Development</Link></li>
-            <li><Link to="/ServicesPage" className="text-gray-400 hover:text-white">App Development</Link></li>
-            <li><Link to="/ServicesPage" className="text-gray-400 hover:text-white">Social Media Marketing</Link></li>
-            <li><Link to="/ServicesPage" className="text-gray-400 hover:text-white">LLMs & AI Chatbots</Link></li>
+            <li><Link to="/services?service=web" className="text-gray-400 hover:text-white">Web Development</Link></li>
+            <li><Link to="/services?service=app" className="text-gray-400 hover:text-white">App Development</Link></li>
+            <li><Link to="/services?service=social" className="text-gray-400 hover:text-white">Social Media Marketing</Link></li>
+            <li><Link to="/services?service=llm" className="text-gray-400 hover:text-white">LLMs & AI Chatbots</Link></li>
           </ul>
         </div>
 
@@ -81,8 +81,8 @@ const Footer = () => {
           <h4 className="text-lg font-semibold mb-4">Projects</h4>
           <ul className="space-y-3">
             <li><Link to="/Projects" className="text-gray-400 hover:text-white">Our Projects</Link></li>
-            <li><Link to="/ServicesPage" className="text-gray-400 hover:text-white">Our Services</Link></li>
-            <li><Link to="/Aboutus" className="text-gray-400 hover:text-white">About Us</Link></li>
+            <li><Link to="/services" className="text-gray-400 hover:text-white">Our Services</Link></li>
+            <li><Link to="/AboutUs" className="text-gray-400 hover:text-white">About Us</Link></li>
           </ul>
         </div>
       </div>

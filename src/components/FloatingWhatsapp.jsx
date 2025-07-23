@@ -2,7 +2,7 @@ import React from 'react';
 import whatsappLogo from '../assets/whatsapp.png'; 
 const FloatingWhatsApp = () => {
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 left-6 z-50">
       <a
         href="https://wa.me/447470089199"
         target="_blank"

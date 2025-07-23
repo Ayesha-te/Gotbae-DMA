@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ArrowLeft, Code, Share2, Globe, Bot, MessageSquare, BarChart,
   Check, Star, Smartphone
@@ -6,18 +7,47 @@ import {
 
 import bannerImg from '../assets/services.jpg';
 
-const ServicesPage = ({ onBack }) => {
+const ServicesPage = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isVisible, setIsVisible] = useState(false);
   const [curtainOpen, setCurtainOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(0);
 
+  // Service mapping for URL parameters
+  const serviceMapping = {
+    'web': 0,    // Web Development
+    'social': 1, // Social Media Marketing
+    'digital': 2, // Digital Marketing
+    'llm': 3,    // LLMs & AI Solutions
+    'chatbot': 4, // Chatbots & Automation
+    'business': 5, // Business Solutions
+    'app': 6,    // App Development
+  };
+
   useEffect(() => {
+    // Animations
     setTimeout(() => setCurtainOpen(true), 100);
     setTimeout(() => setIsVisible(true), 800);
-  }, []);
+    
+    // Handle URL parameter for specific service
+    const serviceParam = searchParams.get('service');
+    if (serviceParam && serviceMapping.hasOwnProperty(serviceParam)) {
+      setSelectedService(serviceMapping[serviceParam]);
+      
+      // Scroll to service details section after a delay to ensure it's rendered
+      setTimeout(() => {
+        const serviceDetailsSection = document.getElementById('service-details');
+        if (serviceDetailsSection) {
+          serviceDetailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 1000);
+    }
+  }, [searchParams]);
 
   const services = [
     {
+      id: 'web',
       icon: <Code className="w-12 h-12" />,
       title: "Web Development",
       shortDesc: "Custom websites including SEO & eCommerce",
@@ -39,6 +69,7 @@ const ServicesPage = ({ onBack }) => {
       ]
     },
     {
+      id: 'social',
       icon: <Share2 className="w-12 h-12" />,
       title: "Social Media Marketing",
       shortDesc: "Strategic campaigns for leads & awareness",
@@ -58,6 +89,7 @@ const ServicesPage = ({ onBack }) => {
       ]
     },
     {
+      id: 'digital',
       icon: <Globe className="w-12 h-12" />,
       title: "Digital Marketing",
       shortDesc: "PPC, SEO & Email Campaigns",
@@ -76,6 +108,7 @@ const ServicesPage = ({ onBack }) => {
       ]
     },
     {
+      id: 'llm',
       icon: <Bot className="w-12 h-12" />,
       title: "LLMs & AI Solutions",
       shortDesc: "Custom AI & ML automation",
@@ -94,6 +127,7 @@ const ServicesPage = ({ onBack }) => {
       ]
     },
     {
+      id: 'chatbot',
       icon: <MessageSquare className="w-12 h-12" />,
       title: "Chatbots & Automation",
       shortDesc: "24/7 support bots & workflows",
@@ -112,6 +146,7 @@ const ServicesPage = ({ onBack }) => {
       ]
     },
     {
+      id: 'business',
       icon: <BarChart className="w-12 h-12" />,
       title: "Business Solutions",
       shortDesc: "CRM, ERP & BI tools",
@@ -129,6 +164,7 @@ const ServicesPage = ({ onBack }) => {
       ]
     },
     {
+      id: 'app',
       icon: <Smartphone className="w-12 h-12" />,
       title: "App Development",
       shortDesc: "iOS & Android native + cross-platform",
@@ -151,6 +187,10 @@ const ServicesPage = ({ onBack }) => {
     }
   ];
 
+  const handleBackClick = () => {
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Curtain Animation */}
@@ -161,7 +201,7 @@ const ServicesPage = ({ onBack }) => {
 
       {/* Back Button */}
       <button
-        onClick={onBack}
+        onClick={handleBackClick}
         className={`fixed top-6 left-6 z-40 bg-white/90 text-gray-700 p-3 rounded-full shadow-lg hover:shadow-xl transition-transform duration-300 ${isVisible ? 'opacity-100' : 'opacity-0 -translate-y-4'}`}
       >
         <ArrowLeft className="w-6 h-6" />
@@ -187,7 +227,7 @@ const ServicesPage = ({ onBack }) => {
       {/* Service Selector */}
       <section className="py-10 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4 overflow-x-auto py-4">
             {services.map((service, index) => (
               <button
                 key={index}
@@ -207,7 +247,7 @@ const ServicesPage = ({ onBack }) => {
       </section>
 
       {/* Service Details */}
-      <section className="py-20 bg-white">
+      <section id="service-details" className="py-20 bg-white">
         <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <div className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r ${services[selectedService].gradient} rounded-3xl mb-6 text-white`}>

@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
-import FloatingContact from './components/FloatingContact';
+import Bot from "./components/GotbaeBot"
 import FloatingWhatsApp from './components/FloatingWhatsapp'; 
-
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import WhoWeAre from './pages/WhoWeAre';
 import Aboutus from './pages/Aboutus';
@@ -15,6 +15,7 @@ import AboutUs from './components/AboutUs';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen flex flex-col justify-between">
         <Navigation />
 
@@ -29,7 +30,7 @@ function App() {
         </main>
 
         <Footer />
-        <FloatingContact />
+        <Bot />
         <FloatingWhatsApp /> 
       </div>
     </Router>
