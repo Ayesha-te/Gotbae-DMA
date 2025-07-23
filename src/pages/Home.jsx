@@ -8,6 +8,7 @@ import AboutUs from '../components/AboutUs';
 import Reviews from '../components/Reviews';
 import WhyChooseUs from '../components/WhyChooseUs';
 import Contact from '../components/Contact';
+import Bot from "../components/GotbaeBot"
 
 const Home = () => {
   const location = useLocation();
