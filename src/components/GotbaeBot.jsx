@@ -3,14 +3,11 @@ import { X, Bot, Send, ChevronDown, Settings, AlertTriangle } from 'lucide-react
 import React from 'react';
 
 const GotbaeBot = () => {
-  // Breaking up the API key to bypass GitHub security scanning
-  // This will be reconstructed at runtime
-  const API_PREFIX = 'sk-pro';
-  const API_MIDDLE = 'j-nEn0uQDRMDn7pMFcgrFY8haoNmSzedsJ8MhDzzNVa8fSDyGGoCi0IrV1e18l';
-  const API_SUFFIX = 'EjiYHXvxfH7LngT3BlbkFJwixVoipA-nqh-yUTjuU54IKreIDhoFGi8D1kjZWYfzKLNuuPvhjRq-3zHF5QdeejYFHMweaIMA';
-  
-  // Reconstruct at runtime
-  const OPENAI_API_KEY = `${API_PREFIX}${API_MIDDLE}${API_SUFFIX}`;
+  // ================================
+  // 👇 JUST ADD YOUR API KEY HERE 👇
+  // ================================
+  const OPENAI_API_KEY = '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'; 
+  // ================================
 
   const [showAI, setShowAI] = useState(false);
   const [messages, setMessages] = useState([
@@ -85,6 +82,11 @@ const GotbaeBot = () => {
   // Call OpenAI API with fallback to smart responses
   const callOpenAI = async (userMessage) => {
     try {
+      // Skip API call if no key provided
+      if (!OPENAI_API_KEY || OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
+        throw new Error('NO_API_KEY');
+      }
+      
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -220,11 +222,11 @@ Keep responses friendly, helpful, and concise (under 100 words).`
             <div ref={messagesEndRef} />
           </div>
 
-          {/* API Key Status */}
-          {apiStatus === 'failed' && (
+          {/* API Key Warning - Only shows if key is not set */}
+          {(OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') && (
             <div className="mb-3 p-2 bg-yellow-50 border border-yellow-200 rounded-lg flex items-start gap-2 text-xs text-yellow-800">
               <AlertTriangle className="w-4 h-4 flex-shrink-0 text-yellow-600" />
-              <span>API connection failed. Using smart responses. Please check your internet connection.</span>
+              <span>Add your OpenAI API key to enable AI responses. Currently using smart fallback responses.</span>
             </div>
           )}
 
