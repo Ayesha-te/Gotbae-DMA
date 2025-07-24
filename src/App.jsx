@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Contact from './components/Contact.jsx';
+
 
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -26,6 +28,7 @@ function App() {
             <Route path="/Aboutus" element={<Aboutus />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/services" element={<ServicesPage />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
 
