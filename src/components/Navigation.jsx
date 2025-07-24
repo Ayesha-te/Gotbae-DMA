@@ -18,10 +18,10 @@ const Navigation = () => {
         { name: 'Web Development', path: '/services?service=web' },
         { name: 'Mobile Apps', path: '/services?service=app' },
         { name: 'Digital Marketing', path: '/services?service=digital' },
-        { name: 'SEO Services', path: '/services?service=seo' },
-        { name: 'Business Solutions', path: '/services?service=business' },
-        { name: 'LLMs&Chatbots', path: '/services?service=llm' },
         { name: 'Social Media Marketing', path: '/services?service=social' },
+        { name: 'Business Solutions', path: '/services?service=business' },
+        { name: 'LLMs & AI Chatbots', path: '/services?service=llm' },
+        { name: 'Chatbots & Automation', path: '/services?service=chatbot' },
       ],
     },
     {
