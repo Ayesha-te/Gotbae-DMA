@@ -1,9 +1,50 @@
 import { useState } from 'react';
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import React from 'react';
+import axios from 'axios'; // Make sure axios is installed: npm install axios
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      // Replace with your API URL - use environment variable in production
+      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+      
+      const response = await axios.post(`${API_URL}/api/contact`, formData);
+      
+      if (response.data.success) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        throw new Error(response.data.message || 'Failed to send message');
+      }
+    } catch (err) {
+      console.error('Error submitting form:', err);
+      setError('There was an error sending your message. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section id="contact" className="py-20 bg-gray-50 transition-all duration-500">
@@ -55,82 +96,92 @@ const Contact = () => {
           {/* Form Section */}
           <div className="bg-white rounded-xl shadow-lg p-8 transform transition-all duration-300 hover:shadow-xl hover:scale-105">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
-            <form
-              action="https://formspree.io/f/xkgzjroz"
-              method="POST"
-              onSubmit={() => setSubmitted(true)}
-              className="space-y-6"
-            >
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Your full name"
-                />
+            {!submitted ? (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Your full name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="What's this about?"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={6}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Tell us about your project..."
+                  ></textarea>
+                </div>
+
+                {error && <p className="text-red-600 font-medium">{error}</p>}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 group"
+                >
+                  {loading ? (
+                    <span>Sending...</span>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 transition-all duration-300 group-hover:translate-x-1" />
+                      <span>Send Message</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            ) : (
+              <div className="text-center py-8">
+                <div className="text-green-500 text-5xl mb-4">✓</div>
+                <h4 className="text-xl font-bold text-gray-800 mb-2">Thank You!</h4>
+                <p className="text-gray-600">Your message has been sent successfully. We'll get back to you shortly.</p>
               </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="your@email.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="What's this about?"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={6}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Tell us about your project..."
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 group"
-              >
-                <Send className="w-5 h-5 transition-all duration-300 group-hover:translate-x-1" />
-                <span>Send Message</span>
-              </button>
-
-              {submitted && (
-                <p className="text-green-600 font-medium mt-4">
-                  ✅ Thank you! We'll get back to you shortly.
-                </p>
-              )}
-            </form>
+            )}
           </div>
         </div>
       </div>
