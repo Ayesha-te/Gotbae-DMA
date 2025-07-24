@@ -3,15 +3,9 @@ import { X, Bot, Send, ChevronDown, Settings, AlertTriangle } from 'lucide-react
 import React from 'react';
 
 const GotbaeBot = () => {
-  // ================================
-  const API_PREFIX = 'sk-pro';
-  const API_MIDDLE = 'j-nEn0uQDRMDn7pMFcgrFY8haoNmSzedsJ8MhDzzNVa8fSDyGGoCi0IrV1e18l';
-  const API_SUFFIX = 'EjiYHXvxfH7LngT3BlbkFJwixVoipA-nqh-yUTjuU54IKreIDhoFGi8D1kjZWYfzKLNuuPvhjRq-3zHF5QdeejYFHMweaIMA';
+  // No API keys needed in frontend anymore!
+  const API_URL = 'https://golbaebot.vercel.app/api/chat'; // Your Vercel API endpoint
   
-  // Reconstruct at runtime
-  const OPENAI_API_KEY = `${API_PREFIX}${API_MIDDLE}${API_SUFFIX}`;
-  // ================================
-
   const [showAI, setShowAI] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -82,45 +76,16 @@ const GotbaeBot = () => {
     return "Thank you for your message. At GOTBAE, we offer a comprehensive range of digital services including web development, app development, digital marketing, social media management, AI solutions, and business technology. Could you please provide more details about what you're looking for so I can better assist you?";
   };
 
-  // Call OpenAI API with fallback to smart responses
-  const callOpenAI = async (userMessage) => {
+  // Call our backend API instead of OpenAI directly
+  const callBackendAPI = async (userMessage) => {
     try {
-      // Skip API call if no key provided
-      if (!OPENAI_API_KEY || OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') {
-        throw new Error('NO_API_KEY');
-      }
-      
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
-          messages: [
-            {
-              role: 'system',
-              content: `You are GotbaeBot, the AI assistant for GOTBAE Digital Solutions, a UK-based company offering web development, app development, digital marketing, AI chatbots, and business solutions.
-
-Company information:
-- Services: Web Development, App Development, Digital Marketing, Social Media Marketing, LLM & Chatbots, Business Solutions
-- Contact: info@gotbae.com, +44 7470 089199
-- Address: 22 Ashfield Lodge, NE4 6RL, Newcastle Upon Tyne, UK
-- Strengths: Trusted & Secure, On-Time Delivery, Expert Team, Trust Worthy, Lightning Fast, 24/7 Support
-- Stats: 100+ Projects Completed, 99% Client Satisfaction, 24/7 Support Available
-
-Your job is to assist potential clients by providing information about GOTBAE's services, helping them understand how GOTBAE can solve their problems, and encouraging them to get in touch for formal inquiries.
-
-Keep responses friendly, helpful, and concise (under 100 words).`
-            },
-            {
-              role: 'user',
-              content: userMessage
-            }
-          ],
-          max_tokens: 200,
-          temperature: 0.7,
+          message: userMessage
         }),
       });
 
@@ -130,9 +95,11 @@ Keep responses friendly, helpful, and concise (under 100 words).`
 
       const data = await response.json();
       setApiStatus('working');
-      return data.choices[0].message.content;
+      
+      // Backend API should return { reply: "message text" }
+      return data.reply;
     } catch (error) {
-      console.error('OpenAI API error:', error);
+      console.error('Backend API error:', error);
       setApiStatus('failed');
       throw error;
     }
@@ -148,8 +115,8 @@ Keep responses friendly, helpful, and concise (under 100 words).`
     setLoading(true);
 
     try {
-      // Try OpenAI API first
-      const response = await callOpenAI(currentInput);
+      // Try backend API first
+      const response = await callBackendAPI(currentInput);
       
       const botMessage = {
         sender: 'bot',
@@ -225,11 +192,11 @@ Keep responses friendly, helpful, and concise (under 100 words).`
             <div ref={messagesEndRef} />
           </div>
 
-          {/* API Key Warning - Only shows if key is not set */}
-          {(OPENAI_API_KEY === 'YOUR_OPENAI_API_KEY_HERE') && (
+          {/* API Status Warning - Only shows if connection failed */}
+          {apiStatus === 'failed' && (
             <div className="mb-3 p-2 bg-yellow-50 border border-yellow-200 rounded-lg flex items-start gap-2 text-xs text-yellow-800">
               <AlertTriangle className="w-4 h-4 flex-shrink-0 text-yellow-600" />
-              <span>Add your OpenAI API key to enable AI responses. Currently using smart fallback responses.</span>
+              <span>Connection to AI service failed. Using smart fallback responses.</span>
             </div>
           )}
 
