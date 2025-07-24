@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import logo from '../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const navigate = useNavigate();
+  const mobileMenuRef = useRef(null);
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -14,13 +15,13 @@ const Navigation = () => {
       name: 'Services',
       href: '/services',
       dropdown: [
-        'Web Development',
-        'Mobile Apps',
-        'Digital Marketing',
-        'SEO Services',
-        'Business Solutions',
-        'LLMs&Chatbots',
-        'Social Media Marketing',
+        { name: 'Web Development', path: '/services?service=web' },
+        { name: 'Mobile Apps', path: '/services?service=app' },
+        { name: 'Digital Marketing', path: '/services?service=digital' },
+        { name: 'SEO Services', path: '/services?service=seo' },
+        { name: 'Business Solutions', path: '/services?service=business' },
+        { name: 'LLMs&Chatbots', path: '/services?service=llm' },
+        { name: 'Social Media Marketing', path: '/services?service=social' },
       ],
     },
     {
@@ -37,7 +38,28 @@ const Navigation = () => {
   const handleNavClick = (item) => {
     navigate(item.href);
     setIsOpen(false);
+    window.scrollTo(0, 0); // Scroll to top on navigation
   };
+
+  const handleSubItemClick = (path) => {
+    navigate(path);
+    setActiveDropdown(null);
+    setIsOpen(false);
+    window.scrollTo(0, 0); // Scroll to top on navigation
+  };
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50 transition-all duration-300">
@@ -68,7 +90,7 @@ const Navigation = () => {
                   }}
                   className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 transition-all duration-300 py-2 transform hover:scale-105"
                 >
-                  <span className="font-medium">{item.name}</span>
+                  <span className="font-semibold text-lg">{item.name}</span>
                   {item.dropdown && (
                     <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-300" />
                   )}
@@ -82,11 +104,7 @@ const Navigation = () => {
                       return (
                         <button
                           key={label}
-                          onClick={() => {
-                            navigate(path);
-                            setActiveDropdown(null);
-                            setIsOpen(false);
-                          }}
+                          onClick={() => handleSubItemClick(path)}
                           className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300 transform hover:scale-105 hover:translate-x-1"
                         >
                           {label}
@@ -103,6 +121,7 @@ const Navigation = () => {
           <button
             className="md:hidden absolute right-0 top-1/2 transform -translate-y-1/2 transition-all duration-300 hover:scale-110"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -110,41 +129,43 @@ const Navigation = () => {
 
         {/* Mobile Menu Items */}
         {isOpen && (
-          <div className="md:hidden py-4 space-y-4 animate-in fade-in slide-in-from-top-4">
-            {navItems.map((item) => (
-              <div key={item.name}>
-                <a
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item);
-                  }}
-                  className="block py-2 text-gray-700 hover:text-blue-600 transition-all duration-300 transform hover:scale-105 hover:translate-x-2"
-                >
-                  {item.name}
-                </a>
-                {item.dropdown && (
-                  <div className="ml-4 mt-1 space-y-1">
-                    {item.dropdown.map((subItem) => {
-                      const label = typeof subItem === 'string' ? subItem : subItem.name;
-                      const path = typeof subItem === 'string' ? '/services' : subItem.path;
-                      return (
-                        <button
-                          key={label}
-                          onClick={() => {
-                            navigate(path);
-                            setIsOpen(false);
-                          }}
-                          className="block text-left text-sm text-gray-600 hover:text-blue-600 transition"
-                        >
-                          ↳ {label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            ))}
+          <div 
+            ref={mobileMenuRef}
+            className="md:hidden fixed inset-0 top-16 bg-white z-40 overflow-y-auto max-h-[calc(100vh-4rem)] pb-20"
+          >
+            <div className="py-4 space-y-4">
+              {navItems.map((item) => (
+                <div key={item.name} className="px-4">
+                  <a
+                    href={item.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(item);
+                    }}
+                    className="block py-3 text-gray-800 font-bold text-lg hover:text-blue-600 transition-all duration-300 transform hover:bg-blue-50 rounded-lg px-3"
+                  >
+                    {item.name}
+                  </a>
+                  {item.dropdown && (
+                    <div className="ml-4 mt-2 space-y-2 border-l-2 border-blue-200 pl-3 max-h-60 overflow-y-auto">
+                      {item.dropdown.map((subItem) => {
+                        const label = typeof subItem === 'string' ? subItem : subItem.name;
+                        const path = typeof subItem === 'string' ? '/services' : subItem.path;
+                        return (
+                          <button
+                            key={label}
+                            onClick={() => handleSubItemClick(path)}
+                            className="block w-full text-left py-2 px-3 text-gray-700 font-medium hover:text-blue-600 transition-all duration-300 hover:bg-blue-50 rounded-lg"
+                          >
+                            {label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
