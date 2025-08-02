@@ -1,107 +1,188 @@
-import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { Phone, Mail, MapPin, Send } from 'lucide-react';
+import React from 'react';
 
 const Contact = () => {
-  useEffect(() => {
-    // Load the Sender script
-    const script = document.createElement('script');
-    script.innerHTML = `
-      (function (s, e, n, d, er) {
-        s['Sender'] = er;
-        s[er] = s[er] || function () {
-          (s[er].q = s[er].q || []).push(arguments)
-        }, s[er].l = 1 * new Date();
-        var a = e.createElement(n),
-            m = e.getElementsByTagName(n)[0];
-        a.async = 1;
-        a.src = d;
-        m.parentNode.insertBefore(a, m)
-      })(window, document, 'script', 'https://cdn.sender.net/accounts_resources/universal.js', 'sender');
-      sender('8ab1c8bc388046')
-    `;
-    document.head.appendChild(script);
-    
-    // Wait for script to load then initialize form
-    script.onload = () => {
-      // Force re-render of the form
-      if (window.sender) {
-        window.sender('form:init');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  // GeniusEstimate-style logic for sending the email to backend
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const res = await fetch("https://geniusestimate-backend-main.vercel.app/api/contact", {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        const data = await res.json();
+        setError(data.message || 'Failed to send message');
       }
-    };
-    
-    return () => {
-      // Cleanup if component unmounts
-      if (script.parentNode) {
-        document.head.removeChild(script);
-      }
-    };
-  }, []);
+    } catch (err) {
+      setError('There was an error sending your message. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <section className="py-20">
+    <section id="contact" className="py-20 bg-gray-50 transition-all duration-500">
       <div className="container mx-auto px-4">
-        <h1 className="text-5xl font-bold text-center mb-6">Get In Touch</h1>
-        <p className="text-xl text-center mb-16">
-          Ready to start your next project? Let's discuss how we can help transform your digital presence
-        </p>
-        
+        <div className="text-center mb-16 transform transition-all duration-700 hover:scale-105">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 transition-all duration-500 hover:text-blue-600">
+            Get In Touch
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto transition-all duration-500 hover:text-gray-800 hover:scale-105">
+            Ready to start your next project? Let's discuss how we can help transform your digital presence
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Information side */}
-          <div>
-            <h2 className="text-3xl font-bold mb-8">Contact Information</h2>
-            
-            <div className="space-y-8">
-              {/* Phone */}
-              <div className="flex items-center">
-                <div className="bg-blue-600 text-white p-4 rounded-full">
-                  {/* Phone icon */}
+          {/* Contact Info */}
+          <div className="transform transition-all duration-500 hover:scale-105">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 transition-all duration-300 hover:text-blue-600">Contact Information</h3>
+            <div className="space-y-6">
+              <div className="flex items-center space-x-4 hover:scale-105 transition-all duration-300">
+                <div className="bg-blue-600 text-white p-3 rounded-full">
+                  <Phone className="w-6 h-6" />
                 </div>
-                <div className="ml-4">
-                  <h3 className="font-semibold">Phone</h3>
-                  <p>+44 7470 089199</p>
+                <div>
+                  <h4 className="font-semibold text-gray-900">Phone</h4>
+                  <p className="text-gray-600">+44 7470 089199</p>
                 </div>
               </div>
-              
-              {/* Email */}
-              <div className="flex items-center">
-                <div className="bg-purple-600 text-white p-4 rounded-full">
-                  {/* Email icon */}
+              <div className="flex items-center space-x-4 hover:scale-105 transition-all duration-300">
+                <div className="bg-purple-600 text-white p-3 rounded-full">
+                  <Mail className="w-6 h-6" />
                 </div>
-                <div className="ml-4">
-                  <h3 className="font-semibold">Email</h3>
-                  <p>info@gotbae.com</p>
+                <div>
+                  <h4 className="font-semibold text-gray-900">Email</h4>
+                  <p className="text-gray-600">info@gotbae.com</p>
                 </div>
               </div>
-              
-              {/* Address */}
-              <div className="flex items-center">
-                <div className="bg-green-600 text-white p-4 rounded-full">
-                  {/* Location icon */}
+              <div className="flex items-center space-x-4 hover:scale-105 transition-all duration-300">
+                <div className="bg-green-600 text-white p-3 rounded-full">
+                  <MapPin className="w-6 h-6" />
                 </div>
-                <div className="ml-4">
-                  <h3 className="font-semibold">Address</h3>
-                  <p>22 Ashfield Lodge, NE4 6RL, Newcastle Upon Tyne, UK</p>
+                <div>
+                  <h4 className="font-semibold text-gray-900">Address</h4>
+                  <p className="text-gray-600">22 Ashfield Lodge, NE4 6RL, Newcastle Upon Tyne, UK</p>
                 </div>
               </div>
             </div>
           </div>
-          
-          {/* Form side */}
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <h2 className="text-3xl font-bold mb-6">Send us a Message</h2>
-            
-            {/* THIS IS WHERE THE FORM WILL APPEAR */}
-            <div 
-              style={{ textAlign: "left" }} 
-              className="sender-form-field" 
-              data-sender-form-id="en5J3l"
-            ></div>
 
-            {/* Fallback message in case form doesn't load */}
-            <div id="form-fallback">
-              <p className="text-gray-600 mt-4">
-                If the form doesn't appear, please refresh the page or contact us directly at info@gotbae.com
-              </p>
-            </div>
+          {/* Form Section */}
+          <div className="bg-white rounded-xl shadow-lg p-8 transform transition-all duration-300 hover:shadow-xl hover:scale-105">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
+            {!submitted ? (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Your full name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="What's this about?"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={6}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Tell us about your project..."
+                  ></textarea>
+                </div>
+
+                {error && <p className="text-red-600 font-medium">{error}</p>}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 group"
+                >
+                  {loading ? (
+                    <span>Sending...</span>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 transition-all duration-300 group-hover:translate-x-1" />
+                      <span>Send Message</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            ) : (
+              <div className="text-center py-8">
+                <div className="text-green-500 text-5xl mb-4">✓</div>
+                <h4 className="text-xl font-bold text-gray-800 mb-2">Thank You!</h4>
+                <p className="text-gray-600">Your message has been sent successfully. We'll get back to you shortly.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
