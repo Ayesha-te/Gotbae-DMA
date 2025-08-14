@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet'; // Add SEO
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import React from 'react';
 
@@ -25,14 +26,12 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
     try {
       const res = await fetch("https://golbaebot-contactus.vercel.app/api/contact", {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });
-
       if (res.ok) {
         setSubmitted(true);
         setFormData({ name: '', email: '', subject: '', message: '' });
@@ -47,8 +46,40 @@ const Contact = () => {
     }
   };
 
+  // SEO structured data for ContactPage
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact GOTBAE",
+    description: "Contact GOTBAE for web development, marketing, business solutions, and digital transformation.",
+    url: "https://gotbae.com/contact",
+    telephone: "+44 7470 089199",
+    email: "info@gotbae.com",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "22 Ashfield Lodge, NE4 6RL",
+      addressLocality: "Newcastle Upon Tyne",
+      addressCountry: "UK"
+    }
+  };
+
   return (
     <section id="contact" className="py-20 bg-gray-50 transition-all duration-500">
+      <Helmet>
+        <title>Contact Us | GOTBAE Digital Agency</title>
+        <meta
+          name="description"
+          content="Contact GOTBAE for your next project. Get in touch for web, marketing, business, app development and digital solutions."
+        />
+        <meta
+          name="keywords"
+          content="GOTBAE contact, digital agency, web development, email, phone, Newcastle, UK, business solutions, app development"
+        />
+        <meta name="author" content="GOTBAE" />
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 transform transition-all duration-700 hover:scale-105">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 transition-all duration-500 hover:text-blue-600">
@@ -58,7 +89,6 @@ const Contact = () => {
             Ready to start your next project? Let's discuss how we can help transform your digital presence
           </p>
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Info */}
           <div className="transform transition-all duration-500 hover:scale-105">
@@ -93,7 +123,6 @@ const Contact = () => {
               </div>
             </div>
           </div>
-
           {/* Form Section */}
           <div className="bg-white rounded-xl shadow-lg p-8 transform transition-all duration-300 hover:shadow-xl hover:scale-105">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
@@ -113,7 +142,6 @@ const Contact = () => {
                     placeholder="Your full name"
                   />
                 </div>
-
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                     Email Address
@@ -128,7 +156,6 @@ const Contact = () => {
                     placeholder="your@email.com"
                   />
                 </div>
-
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                     Subject
@@ -143,7 +170,6 @@ const Contact = () => {
                     placeholder="What's this about?"
                   />
                 </div>
-
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                     Message
@@ -158,9 +184,7 @@ const Contact = () => {
                     placeholder="Tell us about your project..."
                   ></textarea>
                 </div>
-
                 {error && <p className="text-red-600 font-medium">{error}</p>}
-
                 <button
                   type="submit"
                   disabled={loading}

@@ -1,10 +1,48 @@
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet'; // SEO
 import logo from '../assets/logo.png';
 
 const Footer = () => {
+  // SEO structured data for Organization/Website
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "GOTBAE",
+    url: "https://gotbae.com",
+    logo: "https://gotbae.com/logo.png", // update if you host the logo
+    sameAs: [
+      "https://www.linkedin.com/company/gotbae-ltd/posts/?feedView=all",
+      "https://www.instagram.com/gotbaetd/",
+      "https://x.com/Gotbaeltd",
+      "https://www.facebook.com/profile.php?id=61567688457845&locale=en_GB"
+    ],
+    description: "Transforming businesses through innovative digital solutions. Your success is our mission.",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "22 Ashfield Lodge, NE4 6RL",
+      addressLocality: "Newcastle Upon Tyne",
+      addressCountry: "UK"
+    }
+  };
+
   return (
     <footer className="relative bg-gray-900 text-white pt-32 pb-8 px-6 overflow-hidden">
+      <Helmet>
+        <title>GOTBAE | Digital Solutions Agency</title>
+        <meta
+          name="description"
+          content="GOTBAE helps businesses grow with web development, marketing, mobile apps, AI, and digital solutions. Connect with us for your project."
+        />
+        <meta
+          name="keywords"
+          content="GOTBAE, digital agency, web development, app development, marketing, AI, Newcastle, UK, contact, footer"
+        />
+        <meta name="author" content="GOTBAE" />
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
       {/* Wavy Top */}
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
         <svg
@@ -24,7 +62,6 @@ const Footer = () => {
           />
         </svg>
       </div>
-
       {/* Footer Content */}
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 z-10 relative">
         {/* Logo & About */}
@@ -54,7 +91,6 @@ const Footer = () => {
             </a>
           </div>
         </div>
-
         {/* Services */}
         <div>
           <h4 className="text-lg font-semibold mb-4">Services</h4>
@@ -65,7 +101,6 @@ const Footer = () => {
             <li><Link to="/services?service=llm" className="text-gray-400 hover:text-white">LLMs & AI Chatbots</Link></li>
           </ul>
         </div>
-
         {/* Who We Are */}
         <div>
           <h4 className="text-lg font-semibold mb-4">Who We Are</h4>
@@ -75,7 +110,6 @@ const Footer = () => {
             <li><Link to="/AboutUs" className="text-gray-400 hover:text-white">Our Story</Link></li>
           </ul>
         </div>
-
         {/* Projects */}
         <div>
           <h4 className="text-lg font-semibold mb-4">Projects</h4>
@@ -86,7 +120,6 @@ const Footer = () => {
           </ul>
         </div>
       </div>
-
       {/* Copyright */}
       <div className="text-center mt-12 pt-8 border-t border-gray-800">
         <p className="text-gray-400">© 2024 GOTBAE. All rights reserved.</p>

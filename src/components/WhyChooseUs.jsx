@@ -1,5 +1,6 @@
 import { Shield, Clock, Users, Trophy, Zap, Heart } from 'lucide-react';
 import React from 'react';
+import { Helmet } from 'react-helmet'; // SEO
 
 const WhyChooseUs = () => {
   const reasons = [
@@ -35,15 +36,37 @@ const WhyChooseUs = () => {
     }
   ];
 
+  // SEO structured data for "Why Choose Us"
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Why Choose GOTBAE?",
+    description: "Discover why clients choose GOTBAE: trusted, secure, expert team, fast delivery, award-winning, and 24/7 support."
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 text-white relative overflow-hidden transition-all duration-1000">
+      <Helmet>
+        <title>Why Choose Us | GOTBAE Digital Agency</title>
+        <meta
+          name="description"
+          content="Why choose GOTBAE? Trusted, secure, expert team, fast delivery, award-winning, and 24/7 support for digital projects."
+        />
+        <meta
+          name="keywords"
+          content="GOTBAE, why choose us, trust, security, expert team, fast delivery, award winning, support, digital agency"
+        />
+        <meta name="author" content="GOTBAE" />
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
       {/* Animated background effects */}
       <div className="absolute inset-0">
         <div className="absolute top-20 right-20 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse transition-all duration-1000"></div>
         <div className="absolute bottom-40 left-20 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000 transition-all duration-1000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-2000 transition-all duration-1000"></div>
       </div>
-
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
@@ -54,7 +77,6 @@ const WhyChooseUs = () => {
             We're not just another digital agency. Here's what makes us different and why clients choose us again and again
           </p>
         </div>
-
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {reasons.map((reason, index) => (

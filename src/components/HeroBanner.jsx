@@ -1,8 +1,17 @@
-import { ArrowRight } from 'lucide-react';
 import React from 'react';
+import { Helmet } from 'react-helmet'; // SEO
+import { ArrowRight } from 'lucide-react';
 import banner from '../assets/Banner.jpg'; // 👈 ensure the path is correct
 
 const HeroBanner = () => {
+  // SEO structured data for Hero/Home
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "GOTBAE Digital Agency",
+    description: "Transform your digital presence with GOTBAE. Stunning websites, apps, and digital solutions for business success."
+  };
+
   return (
     <section
       id="home"
@@ -11,16 +20,29 @@ const HeroBanner = () => {
         backgroundImage: `url(${banner})`,
       }}
     >
+      <Helmet>
+        <title>GOTBAE | Transform Your Digital Presence</title>
+        <meta
+          name="description"
+          content="GOTBAE creates stunning websites, mobile apps, and digital solutions for businesses. Get a quote and transform your online presence."
+        />
+        <meta
+          name="keywords"
+          content="GOTBAE, digital agency, web development, mobile apps, digital solutions, banner, hero, Newcastle, UK"
+        />
+        <meta name="author" content="GOTBAE" />
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
       {/* Optional black overlay for text contrast */}
       <div className="absolute inset-0 bg-black/50 z-0"></div>
-
       {/* Glowing background circles */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse transition-all duration-1000"></div>
         <div className="absolute top-40 right-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000 transition-all duration-1000"></div>
         <div className="absolute bottom-20 left-40 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-2000 transition-all duration-1000"></div>
       </div>
-
       {/* Main content */}
       <div className="relative z-10 container mx-auto px-4 py-32">
         <div className="max-w-4xl mx-auto text-center">
@@ -32,12 +54,10 @@ const HeroBanner = () => {
               Digital Presence
             </span>
           </h1>
-
           <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed transform transition-all duration-500 hover:opacity-100 hover:scale-105 hover:text-purple-200">
             We create stunning websites, mobile apps, and digital solutions that drive results. 
             Your success is our mission.
           </p>
-
           {/* Only Get Started button */}
           <div className="flex justify-center mb-12">
             <a
@@ -48,7 +68,6 @@ const HeroBanner = () => {
               <ArrowRight className="w-5 h-5 transition-all duration-300 group-hover:translate-x-1" />
             </a>
           </div>
-
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
             <div className="text-center transform transition-all duration-500 hover:scale-110 cursor-pointer group">

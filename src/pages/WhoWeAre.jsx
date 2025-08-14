@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Target, Heart, Lightbulb } from 'lucide-react';
+import { Helmet } from 'react-helmet'; // install: npm install react-helmet
 
 import bannerImg from '../assets/blog.jpg';
 import teamImg from '../assets/team.jpg';
@@ -41,8 +42,41 @@ const WhoWeAre = () => {
     }
   ];
 
+  // SEO Structured Data (schema.org)
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "GOTBAE",
+    description: "A digital agency empowering businesses through innovative solutions, teamwork, and creative excellence.",
+    team: {
+      "@type": "CreativeWork",
+      name: teamStory.title,
+      description: teamStory.story
+    },
+    mission: missionValues[0].description,
+    values: missionValues[1].description,
+    vision: missionValues[2].description
+  };
+
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
+      {/* SEO Meta Tags */}
+      <Helmet>
+        <title>Who We Are | GOTBAE Digital Agency</title>
+        <meta
+          name="description"
+          content="Learn about GOTBAE's story, mission, values, and vision. Meet the team dedicated to empowering businesses through innovation and collaboration."
+        />
+        <meta
+          name="keywords"
+          content="GOTBAE team, digital agency, mission, values, vision, collaboration, innovation, creative, software, strategy"
+        />
+        <meta name="author" content="GOTBAE" />
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+
       {/* Curtain Animation */}
       <div className={`fixed inset-0 z-50 flex transition-all duration-1000 ${curtainOpen ? 'pointer-events-none' : ''}`}>
         <div className={`w-1/2 h-full bg-gradient-to-r from-blue-900 to-purple-900 transition-transform duration-1000 ${curtainOpen ? '-translate-x-full' : 'translate-x-0'}`} />

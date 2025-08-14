@@ -4,6 +4,7 @@ import {
   ArrowLeft, Code, Share2, Globe, Bot, MessageSquare, BarChart,
   Check, Star, Smartphone
 } from 'lucide-react';
+import { Helmet } from 'react-helmet'; // install: npm install react-helmet
 
 import bannerImg from '../assets/services.jpg';
 
@@ -26,16 +27,11 @@ const ServicesPage = () => {
   };
 
   useEffect(() => {
-    // Animations
     setTimeout(() => setCurtainOpen(true), 100);
     setTimeout(() => setIsVisible(true), 800);
-    
-    // Handle URL parameter for specific service
     const serviceParam = searchParams.get('service');
     if (serviceParam && serviceMapping.hasOwnProperty(serviceParam)) {
       setSelectedService(serviceMapping[serviceParam]);
-      
-      // Scroll to service details section after a delay to ensure it's rendered
       setTimeout(() => {
         const serviceDetailsSection = document.getElementById('service-details');
         if (serviceDetailsSection) {
@@ -187,12 +183,41 @@ const ServicesPage = () => {
     }
   ];
 
+  // SEO Structured Data (schema.org)
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: services.map((service, index) => ({
+      "@type": "Service",
+      position: index + 1,
+      name: service.title,
+      description: service.fullDesc,
+    }))
+  };
+
   const handleBackClick = () => {
     navigate('/');
   };
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
+      {/* SEO Meta Tags */}
+      <Helmet>
+        <title>Our Services | GOTBAE Agency</title>
+        <meta
+          name="description"
+          content="Discover GOTBAE's digital services: web development, app creation, AI solutions, marketing, chatbots, and business tools tailored to elevate your brand."
+        />
+        <meta
+          name="keywords"
+          content="GOTBAE services, web development, app development, AI solutions, digital marketing, social media, chatbots, business automation, CRM, ERP"
+        />
+        <meta name="author" content="GOTBAE" />
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      </Helmet>
+
       {/* Curtain Animation */}
       <div className={`fixed inset-0 z-50 flex transition-all duration-1000 ${curtainOpen ? 'pointer-events-none' : ''}`}>
         <div className={`w-1/2 bg-indigo-900 transition-transform duration-1000 ${curtainOpen ? '-translate-x-full' : 'translate-x-0'}`}></div>
