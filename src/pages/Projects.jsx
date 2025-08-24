@@ -40,6 +40,16 @@ const Projects = ({ onBack }) => {
       link: "https://dapeshawarde.com"
     },
     {
+      id: 4,
+      title: "AccessAutoService.com",
+      image: a,
+      alt: "AccessAutoService.com – MOT Website",
+      description:
+        "A MOT website offering online booking, vehicle checks, and service history tracking.",
+      technologies: ["React", "Django", "MySQL", "Paypal"],
+      link: "https://access-auto-services.co.uk/"
+    },
+    {
       id: 3,
       title: "Najebsupermarket.com",
       image: a,
