@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Menu, X, ChevronDown, Facebook, Instagram, Linkedin, Phone, Twitter } from 'lucide-react';
+import { Menu, X, ChevronDown, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 import logo from '../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -61,58 +61,6 @@ const Navigation = () => {
 
   return (
     <>
-      {/* 🔹 Purple Header with Phone Number and Social Icons */}
-      <div className="bg-purple-600 text-white px-4 py-2">
-        <div className="container mx-auto flex justify-between items-center text-sm">
-          {/* Phone Number on Left */}
-          <div className="flex items-center space-x-2">
-            <Phone className="w-4 h-4" />
-            <a
-              href="tel:+447470089199"
-              className="hover:text-gray-200 transition-colors font-medium"
-            >
-              +44 747 008 9199
-            </a>
-          </div>
-          
-          {/* Social Icons on Right */}
-          <div className="flex items-center space-x-4">
-            <a
-              href="https://www.facebook.com/profile.php?id=61567688457845&locale=en_GB"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gray-200 transition-colors"
-            >
-              <Facebook className="w-5 h-5" />
-            </a>
-            <a
-              href="https://www.instagram.com/gotbaetd/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gray-200 transition-colors"
-            >
-              <Instagram className="w-5 h-5" />
-            </a>
-            <a
-              href="https://x.com/Gotbaeltd"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gray-200 transition-colors"
-            >
-              <Twitter className="w-5 h-5" />
-            </a>
-            <a
-              href="https://www.linkedin.com/company/gotbae-ltd/posts/?feedView=all"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gray-200 transition-colors"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-          </div>
-        </div>
-      </div>
-
       {/* 🔹 Main Navbar */}
       <nav className="bg-white shadow-md sticky top-0 z-50 transition-all duration-300">
         <div className="container mx-auto px-4">
@@ -174,14 +122,51 @@ const Navigation = () => {
               ))}
             </div>
 
-            {/* Mobile Menu Toggle Right */}
-            <button
-              className="md:hidden absolute right-0 top-1/2 transform -translate-y-1/2 transition-all duration-300 hover:scale-110"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label={isOpen ? 'Close menu' : 'Open menu'}
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            {/* Social Icons + Mobile Toggle (Right) */}
+            <div className="flex items-center space-x-4 absolute right-0 top-1/2 transform -translate-y-1/2">
+              {/* Social Icons */}
+              <a
+                href="https://www.facebook.com/profile.php?id=61567688457845&locale=en_GB"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-600 transition-colors"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.instagram.com/gotbaetd/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-600 transition-colors"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://x.com/Gotbaeltd"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-600 transition-colors"
+              >
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/gotbae-ltd/posts/?feedView=all"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-600 transition-colors"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+
+              {/* Mobile Menu Toggle */}
+              <button
+                className="md:hidden transition-all duration-300 hover:scale-110"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              >
+                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
 
           {/* Mobile Menu Items */}
